@@ -1,52 +1,32 @@
-- HumanIntheLoop
+# Understanding Agents
 
-# LinkedIn post generator that pauses for a human to approve or reject each draft.
+This repository contains small LangGraph examples that demonstrate common agent patterns, workflows, and state definitions.
 
-# A writer LLM drafts the post, then LangGraph interrupt waits for your review.
+## Included examples
 
-# If you give feedback, the writer rewrites; if you approve, the workflow ends.
+### HumanInTheLoop
 
-# MemorySaver checkpoints the run so the loop can resume after each human reply.
+A LinkedIn post generator that pauses for human approval after each draft. The workflow uses a writer LLM, a LangGraph interrupt for review, and MemorySaver so the run can resume after feedback.
 
-- Iterative-tools
+### Iterative-tools
 
-# LinkedIn post generator that writes, reviews, and rewrites until the post is approved.
+A LinkedIn post generator that writes, reviews, and rewrites until the content is approved. It can use Tavily search for up-to-date facts and loops through writer, tool/extract, and reviewer steps.
 
-# The writer can call Tavily search for current facts before producing a draft.
+### parallel-reducers
 
-# A stricter reviewer LLM scores the draft and either approves it or sends feedback back.
+A safety analyzer that scores a script for toxicity, copyright risk, and cultural sensitivity. Three LangGraph nodes run in parallel and merge their results into a single shared safety score.
 
-# LangGraph loops writer → tools/extract → reviewer up to three attempts, then prints the final post.
+### seq_wrkflow
 
-- parallel-reducers
+A sequential LangGraph workflow that cleans raw text, turns it into a script, and produces a final polished output.
 
-# Safety analyzer that scores a script for toxicity, copyright risk, and cultural sensitivity.
+### states
 
-# Three LangGraph nodes run in parallel from START, each returning a 0–100 score.
+Example patterns for defining LangGraph-style shared state in Python using `TypedDict`, `Pydantic BaseModel`, and `dataclass`.
 
-# A reducer merges those score dicts into one safety_score on shared state.
+## Repository structure
 
-# The compiled graph is invoked on a sample script and prints the combined scores.
-
-- seq_wrkflow
-
-# Sequential LangGraph workflow that turns messy raw text into a polished final script.
-
-# Stage 1 (editor) cleans grammar and spelling; stage 2 (script) turns that into a script.
-
-# Stage 3 (final_output) produces the last version from the script, then the graph ends.
-
-# Nodes run in a fixed chain: START → editor → script → final_output → END.
-
-- states
-
-# Reference examples of how to define LangGraph-style shared state in Python.
-
-# TypedDict: simple typed dictionary with no runtime validation.
-
-# Pydantic BaseModel: same fields with descriptions and checks when data is created.
-
-# Dataclass: a lightweight class holding name, abbreviation, capital, population, and area.
-# Understanding-Agents
-# Understanding-Agents
-# Understanding-Agents
+- `src/` — example workflows and supporting code
+- `main.py` — entry point for running the examples
+- `requirements.txt` — Python dependencies
+- `README.md` — project overview
